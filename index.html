@@ -14,7 +14,7 @@
     <input id="number-input" type="number" />
     <br />
 
-    <button onclick="pyodide.runPythonAsync('checkFortune()')">運勢をチェック</button>
+    <button id="pyodide.runPythonAsync('checkFortune()')">運勢をチェック</button>
     <p id="result-output"></p>
 
     <py-script>
@@ -34,6 +34,13 @@
 
             Element('result-output').element.innerHTML = result
     </py-script>
+<script>
+window.onload = function() {
+    document.getElementById('check-fortune-button').addEventListener('click', function() {
+        pyodide.runPythonAsync('checkFortune()');
+    });
+};
+</script>
 
 </body>
 </html>
