@@ -14,13 +14,13 @@
     <input id="number-input" type="number" />
     <br />
 
-    <button onclick="checkFortune()">運勢をチェック</button>
+    <button onclick="pyodide.runPythonAsync('checkFortune()')">運勢をチェック</button>
     <p id="result-output"></p>
 
     <py-script>
         def checkFortune():
-            colour = Element('colour-input').element.value
-            number = int(Element('number-input').element.value)
+            colour = Element('colour-input').value
+            number = int(Element('number-input').value)
 
             result = "凶"  # デフォルトの値
 
@@ -32,7 +32,7 @@
             elif colour == "オレンジ" and number == 2:
                 result = "小吉"
 
-            Element('result-output').element.innerText = f"あなたの今週の運勢は【{result}】です"
+            Element('result-output').element.innerHTML = f"あなたの今週の運勢は【{result}】です"
     </py-script>
 
 </body>
