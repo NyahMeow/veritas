@@ -5,15 +5,15 @@
 </head>
 <body>
 
-    <label>•A”’AƒIƒŒƒ“ƒW‚Ì’†‚©‚çA‚ ‚È‚½‚ª‚à‚Á‚Æ‚àD‚«‚ÈF‚ğˆê‚Â‘I‚ñ‚Å‚­‚¾‚³‚¢F</label>
+    <label>é»’ã€ç™½ã€ã‚ªãƒ¬ãƒ³ã‚¸ã®ä¸­ã‹ã‚‰ã€ã‚ãªãŸãŒã‚‚ã£ã¨ã‚‚å¥½ããªè‰²ã‚’ä¸€ã¤é¸ã‚“ã§ãã ã•ã„ï¼š</label>
     <input id="colour-input" type="text" />
     <br />
 
-    <label>0, 1, 2 ‚Ì‚¤‚¿A‚ ‚È‚½‚ª‚à‚Á‚Æ‚àD‚«‚È”š‚ğˆê‚Â‘I‚ñ‚Å‚­‚¾‚³‚¢:</label>
+    <label>0, 1, 2 ã®ã†ã¡ã€ã‚ãªãŸãŒã‚‚ã£ã¨ã‚‚å¥½ããªæ•°å­—ã‚’ä¸€ã¤é¸ã‚“ã§ãã ã•ã„:</label>
     <input id="number-input" type="number" />
     <br />
 
-    <button onclick="checkFortune()">‰^¨‚ğƒ`ƒFƒbƒN</button>
+    <button onclick="checkFortune()">é‹å‹¢ã‚’ãƒã‚§ãƒƒã‚¯</button>
     <p id="result-output"></p>
 
     <py-script>
@@ -21,17 +21,17 @@
             colour = Element('colour-input').element.value
             number = int(Element('number-input').element.value)
 
-            result = "‹¥"  # ƒfƒtƒHƒ‹ƒg‚Ì’l
+            result = "å‡¶"  # ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å€¤
 
-            if colour == "•" and number == 0:
-                result = "‘å‹g"
-            elif colour == "•" and number == 1:
-                result = "’†‹g"
-            # ‘¼‚ÌğŒ‚à“¯—l‚É‹Lq
-            elif colour == "ƒIƒŒƒ“ƒW" and number == 2:
-                result = "¬‹g"
+            if colour == "é»’" and number == 0:
+                result = "å¤§å‰"
+            elif colour == "é»’" and number == 1:
+                result = "ä¸­å‰"
+            # ä»–ã®æ¡ä»¶ã‚‚åŒæ§˜ã«è¨˜è¿°
+            elif colour == "ã‚ªãƒ¬ãƒ³ã‚¸" and number == 2:
+                result = "å°å‰"
 
-            Element('result-output').element.innerText = f"‚ ‚È‚½‚Ì¡T‚Ì‰^¨‚Íy{result}z‚Å‚·"
+            Element('result-output').element.innerText = f"ã‚ãªãŸã®ä»Šé€±ã®é‹å‹¢ã¯ã€{result}ã€‘ã§ã™"
     </py-script>
 
 </body>
