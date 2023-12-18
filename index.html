@@ -1,46 +1,33 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <title>運勢チェッカー</title>
 </head>
 <body>
-
-    <label>黒、白、オレンジの中から、あなたがもっとも好きな色を一つ選んでください：</label>
-    <input id="colour-input" type="text" />
-    <br />
-
-    <label>0, 1, 2 のうち、あなたがもっとも好きな数字を一つ選んでください:</label>
-    <input id="number-input" type="number" />
-    <br />
-
-    <button id="pyodide.runPythonAsync('checkFortune()')">運勢をチェック</button>
+    <label for="colour-input">好きな色を選んでください（黒、白、オレンジ）：</label>
+    <input type="text" id="colour-input">
+    <br>
+    <label for="number-input">好きな数字を選んでください（0、1、2）：</label>
+    <input type="number" id="number-input">
+    <br>
+    <button onclick="checkFortune()">運勢をチェック</button>
     <p id="result-output"></p>
 
-    <py-script>
-        def checkFortune():
-            colour = Element('colour-input').value
-            number = int(Element('number-input').value)
+    <script>
+        function checkFortune() {
+            var colour = document.getElementById('colour-input').valu;
+            var number = parseInt(document.getElementById('number-input').value, 10);
+            var result = "凶"; // デフォルトの値
 
-            result = "凶"  # デフォルトの値
+            if (colour === "黒" && number === 0) {
+                result = "大吉";
+            } else if (colour === "黒" && number === 1) {
+                result = "中吉";
+            } // 他の条件も同様に追加
 
-            if colour == "黒" and number == 0:
-                result = "大吉"
-            elif colour == "黒" and number == 1:
-                result = "中吉"
-            # 他の条件も同様に記述
-            elif colour == "オレンジ" and number == 2:
-                result = "小吉"
-
-            Element('result-output').element.innerHTML = result
-    </py-script>
-<script>
-window.onload = function() {
-    document.getElementById('check-fortune-button').addEventListener('click', function() {
-        pyodide.runPythonAsync('checkFortune()');
-    });
-};
-</script>
-
+            document.getElementById('result-output').innerText = "あなたの今週の運勢は【" + result + "】です";
+        }
+    </script>
 </body>
 </html>
