@@ -1,0 +1,38 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+
+    <label>黒、白、オレンジの中から、あなたがもっとも好きな色を一つ選んでください：</label>
+    <input id="colour-input" type="text" />
+    <br />
+
+    <label>0, 1, 2 のうち、あなたがもっとも好きな数字を一つ選んでください:</label>
+    <input id="number-input" type="number" />
+    <br />
+
+    <button onclick="checkFortune()">運勢をチェック</button>
+    <p id="result-output"></p>
+
+    <py-script>
+        def checkFortune():
+            colour = Element('colour-input').element.value
+            number = int(Element('number-input').element.value)
+
+            result = "凶"  # デフォルトの値
+
+            if colour == "黒" and number == 0:
+                result = "大吉"
+            elif colour == "黒" and number == 1:
+                result = "中吉"
+            # 他の条件も同様に記述
+            elif colour == "オレンジ" and number == 2:
+                result = "小吉"
+
+            Element('result-output').element.innerText = f"あなたの今週の運勢は【{result}】です"
+    </py-script>
+
+</body>
+</html>
