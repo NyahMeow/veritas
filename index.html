@@ -5,8 +5,12 @@
     <title>運勢チェッカー</title>
 </head>
 <body>
-    <label for="colour-input">好きな色を選んでください（黒、白、オレンジ）：</label>
-    <input type="text" id="colour-input">
+    <label for="colour-select">好きな色を選んでください：</label>
+    <select id="colour-select">
+        <option value="黒">黒</option>
+        <option value="白">白</option>
+        <option value="オレンジ">オレンジ</option>
+    </select>
     <br>
     <label for="number-input">好きな数字を選んでください（0、1、2）※半角数値で入力：</label>
     <input type="number" id="number-input">
@@ -16,7 +20,7 @@
 
     <script>
         function checkFortune() {
-            var colour = document.getElementById('colour-input').value; // 'valu' を 'value' に修正
+            var colour = document.getElementById('colour-select').value;
             var number = parseInt(document.getElementById('number-input').value, 10);
             var result = "凶"; // デフォルトの値
 
@@ -38,7 +42,7 @@
                 result = "大吉";
             } else if (colour === "オレンジ" && number === 2) {
                 result = "中吉";
-            } // 他の条件も同様に追加
+            }
 
             document.getElementById('result-output').innerText = "あなたの今週の運勢は【" + result + "】です";
         }
