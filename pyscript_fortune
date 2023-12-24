@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>運勢チェッカー</title>
+    <!-- PyScriptのリンクを追加 -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <label for="colour-select">好きな色を選んでください：</label>
+    <select id="colour-select">
+        <option value="黒">黒</option>
+        <option value="白">白</option>
+        <option value="オレンジ">オレンジ</option>
+    </select>
+    <br>
+    <label for="number-input">好きな数字を選んでください（0、1、2）※半角数値で入力：</label>
+    <input type="number" id="number-input">
+    <br>
+    <button id="check-button">運勢をチェック</button>
+    <p id="result-output"></p>
+
+    <py-script>
+        from js import document
+
+        def check_fortune():
+            colour = document.getElementById('colour-select').value
+            number = int(document.getElementById('number-input').value)
+            result = "凶" # デフォルトの値
+
+            if colour == "黒" and number == 0:
+                result = "小吉"
+            elif colour == "黒" and number == 1:
+                result = "中吉"
+            elif colour == "黒" and number == 2:
+                result = "凶"
+            elif colour == "白" and number == 0:
+                result = "中吉"
+            elif colour == "白" and number == 1:
+                result = "中吉"
+            elif colour == "白" and number == 2:
+                result = "大凶"
+            elif colour == "オレンジ" and number == 0:
+                result = "凶"
+            elif colour == "オレンジ" and number == 1:
+                result = "大吉"
+            elif colour == "オレンジ" and number == 2:
+                result = "中吉"
+
+            document.getElementById('result-output').innerText = f"あなたの今週の運勢は【{result}】です"
+
+        document.getElementById("check-button").addEventListener("click", check_fortune)
+    </py-script>
+</body>
+</html>
