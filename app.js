@@ -11,7 +11,7 @@ function processFile() {
             type: 'binary'
         });
 
-        // ここでExcelファイルの最初のシートを読み込みます
+        // Excelファイルの最初のシートを読み込みます
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const json = XLSX.utils.sheet_to_json(worksheet);
@@ -23,24 +23,10 @@ function processFile() {
 }
 
 function performClusterAnalysis(data) {
-    // ここでデータを処理し、クラスター分析を実施します
-    // この例では、データとクラスター分析の実装方法に依存します
-
-    // 仮の結果を表示します
-    document.getElementById('results').innerHTML = 'Cluster Analysis Results: ...';
-}
-
-// ここで実際のクラスター分析を実装します
-// 例: ML.KMeansクラスを使用する場合
-
-function performClusterAnalysis(data) {
-    // データの前処理
-    // ここではデータが2次元配列と仮定します
     const processedData = preprocessData(data);
 
     // KMeansアルゴリズムの初期化
-    // クラスタの数（k）を設定
-    const k = 3; 
+    const k = 3;
     const kmeans = new ML.KMeans({
         k: k,
         initialization: 'mostDistant',
@@ -55,14 +41,17 @@ function performClusterAnalysis(data) {
 }
 
 function preprocessData(data) {
-    // データの前処理を行う
-    // 例: 数値データの抽出、正規化など
-    return processedData;
+    // データの前処理を行います
+    // この例では単純化のために、データをそのまま返します
+    // 実際には数値データの抽出、正規化、変換などを行う必要があります
+    return data.map(row => {
+        // ここで行ごとの前処理を行う
+        return row;
+    });
 }
 
 function displayResults(clusters) {
-    // 結果を表示する
-    // 例: クラスタごとのデータポイント数や特性を表示
+    // 結果を表示します
+    // ここではクラスタの配列をJSON形式で表示します
     document.getElementById('results').innerHTML = JSON.stringify(clusters);
 }
-
