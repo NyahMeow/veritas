@@ -6,14 +6,16 @@
 <title>運勢チェッカー</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+    
 <body>
+    <div class="container">
+        
     <nav>
         <a href="index.html">Home</a>
-        <a href="page2.html">Page 2</a>
+        <a href="pyscript.html">PyScriptVer</a>
         <a href="page3.html">Page 3</a>
     </nav>
-    
-    <div class="container">
+        
         <label for="colour-select">好きな色を選んでください：</label>
         <select id="colour-select">
             <option value="黒">黒</option>
@@ -24,6 +26,11 @@
         <input type="number" id="number-input">
         <button onclick="checkFortune()">運勢をチェック</button>
         <p id="result-output"></p>
+            <nav>
+     <a href="index.html">Home</a>
+      <a href="pyscript.html">PyScriptVer</a>
+      <a href="page3.html">Page 3</a>
+    </nav>
     </div>
 
     <script>
@@ -55,11 +62,6 @@
             document.getElementById('result-output').innerText = "あなたの今週の運勢は【" + result + "】です";
         }
     </script>
-    <nav>
-     <a href="index.html">Home</a>
-      <a href="pyscript.html">pyscript_ver</a>
-      <a href="page3.html">Page 3</a>
-    </nav>
-
+    
 </body>
 </html>
