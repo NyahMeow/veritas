@@ -7,11 +7,7 @@ function processFile() {
 
     reader.onload = function(e) {
         const data = e.target.result;
-        const workbook = XLSX.read(data, {
-            type: 'binary'
-        });
-
-        // Excelファイルの最初のシートを読み込みます
+        const workbook = XLSX.read(data, { type: 'binary' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const json = XLSX.utils.sheet_to_json(worksheet);
@@ -25,20 +21,21 @@ function processFile() {
 function performClusterAnalysis(data) {
     const processedData = preprocessData(data);
 
-    // KMeansアルゴリズムの初期化
-    const k = 3;
+    // ユーザー入力からkの値を取得
+    const kInput = document.getElementById('kValue');
+    const k = Math.max(1, Math.min(parseInt(kInput.value, 10) || 3, processedData.length - 1));
+
     const kmeans = new ML.KMeans({
         k: k,
         initialization: 'mostDistant',
         seed: Math.random(),
     });
 
-    // クラスタリングの実行
     const clusters = kmeans.predict(processedData);
-
-    // 結果の表示
     displayResults(clusters);
 }
+
+// ... その他の関数（preprocessData, displayResults）...
 
 function preprocessData(data) {
     // データの前処理を行います
