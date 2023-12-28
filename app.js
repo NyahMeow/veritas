@@ -23,7 +23,13 @@ function performClusterAnalysis(data) {
 
     // ユーザー入力からkの値を取得
     const kInput = document.getElementById('kValue');
-    const k = Math.max(1, Math.min(parseInt(kInput.value, 10) || 3, processedData.length - 1));
+    let k = parseInt(kInput.value, 10);
+
+    // kが正の整数で、データポイント数より小さいことを確認
+    if (isNaN(k) || k <= 0 || k >= processedData.length) {
+        k = Math.min(3, processedData.length - 1); // 適切なデフォルト値を設定
+        alert(`Invalid k value. Using default value of ${k}.`);
+    }
 
     const kmeans = new ML.KMeans({
         k: k,
