@@ -18,6 +18,7 @@ function processFile() {
     reader.readAsBinaryString(file);
 }
 
+
 function performClusterAnalysis(data) {
     const processedData = preprocessData(data);
 
@@ -43,13 +44,14 @@ function performClusterAnalysis(data) {
 
 // ... その他の関数（preprocessData, displayResults）...
 
+
 function preprocessData(data) {
-    // データの前処理を行います
-    // この例では単純化のために、データをそのまま返します
-    // 実際には数値データの抽出、正規化、変換などを行う必要があります
     return data.map(row => {
-        // ここで行ごとの前処理を行う
-        return row;
+        // データの前処理を行います
+        // 実際には数値データの抽出、正規化、変換などを行う必要があります
+        // 都道府県名を除外し、数値データのみの配列を作成
+        const values = Object.values(row);
+        return values.slice(1).map(value => parseFloat(value) || 0);
     });
 }
 
