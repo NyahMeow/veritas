@@ -1,22 +1,22 @@
+// イベントリスナーの設定
 document.getElementById('analyzeButton').addEventListener('click', processFile);
 
-function processFile() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
-    const reader = new FileReader();
 
-    reader.onload = function(e) {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: 'binary' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet);
+function preprocessData(data) {
+    // データの前処理を実行
+    const processedData = data.map(row => {
+        // データの前処理を行います
+        // 実際には数値データの抽出、正規化、変換などを行う必要があります
+        // 都道府県名を除外し、数値データのみの配列を作成
+        const values = Object.values(row);
+        return values.slice(1).map(value => parseFloat(value) || 0);
+    });
 
-        performClusterAnalysis(json);
-    };
-
-    reader.readAsBinaryString(file);
+    // 処理されたデータをコンソールに出力
+    console.log(processedData);
+    return processedData;
 }
+
 
 
 function performClusterAnalysis(data) {
@@ -42,18 +42,31 @@ function performClusterAnalysis(data) {
     displayResults(clusters);
 }
 
+
+
+
+
+function processFile() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet);
+
+        performClusterAnalysis(json);
+    };
+
+    reader.readAsBinaryString(file);
+}
+
+
 // ... その他の関数（preprocessData, displayResults）...
 
-
-function preprocessData(data) {
-    return data.map(row => {
-        // データの前処理を行います
-        // 実際には数値データの抽出、正規化、変換などを行う必要があります
-        // 都道府県名を除外し、数値データのみの配列を作成
-        const values = Object.values(row);
-        return values.slice(1).map(value => parseFloat(value) || 0);
-    });
-}
 
 function displayResults(clusters) {
     // 結果を表示します
