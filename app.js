@@ -69,6 +69,10 @@ function processFile() {
         performClusterAnalysis(json);
     };
 
+    reader.onerror = function(e) {
+        console.error("ファイルの読み込み中にエラーが発生しました:", e);
+    };
+
     reader.readAsBinaryString(file);
 }
 
