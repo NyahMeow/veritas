@@ -109,8 +109,16 @@ function processFile() {
     reader.readAsBinaryString(file);
 }
 
-function displayResults(clusters) {
-    // 結果を表示します
-    // ここではクラスタの配列をJSON形式で表示します
-    document.getElementById('results').innerHTML = JSON.stringify(clusters);
+
+// 結果を表示します
+function displayResults(clusters, names) {
+    let tableHtml = "<table><tr><th>ID名</th><th>クラスタ</th></tr>";
+
+    clusters.forEach((cluster, index) => {
+        tableHtml += `<tr><td>${names[index]}</td><td>${cluster}</td></tr>`;
+    });
+
+    tableHtml += "</table>";
+
+    document.getElementById('results').innerHTML = tableHtml;
 }
