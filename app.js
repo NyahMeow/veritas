@@ -59,8 +59,10 @@ function preprocessData(data) {
 }
 
 
+
 function performClusterAnalysis(data) {
-    const processedData = preprocessData(data);
+    // preprocessDataから処理されたデータと都道府県名を取得
+    const { processedData, names } = preprocessData(data);
 
     // ユーザー入力からkの値を取得
     const kInput = document.getElementById('kValue');
@@ -77,8 +79,10 @@ function performClusterAnalysis(data) {
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
     const clusters = kMeans(processedData, k);
-    displayResults(clusters);
+    displayResults(clusters, names); // 都道府県名も渡す
 }
+
+
 
 function processFile() {
     const fileInput = document.getElementById('fileInput');
