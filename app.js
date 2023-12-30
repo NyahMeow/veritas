@@ -26,6 +26,11 @@ function performClusterAnalysis(data) {
     const kInput = document.getElementById('kValue');
     let k = parseInt(kInput.value, 10);
 
+    console.log("ユーザーが入力したkの値:", k);
+
+    // 処理されたデータの長さを出力
+    console.log("処理されたデータの長さ:", processedData.length);
+
     // kが正の整数で、データポイント数より小さいことを確認
     if (isNaN(k) || k <= 0 || k >= processedData.length) {
         k = Math.min(3, processedData.length - 1); // 適切なデフォルト値を設定
