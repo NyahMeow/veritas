@@ -58,6 +58,9 @@ function processFile() {
         const worksheet = workbook.Sheets[firstSheetName];
         const json = XLSX.utils.sheet_to_json(worksheet);
 
+        // 読み込まれたデータをコンソールに出力
+        console.log(json);
+
         performClusterAnalysis(json);
     };
 
