@@ -46,22 +46,22 @@ document.getElementById('analyzeButton').addEventListener('click', processFile);
 
 
 function preprocessData(data) {
-    const names = []; // 都道府県名を保持する配列
+    const names = []; // ID名を保持する配列
     const processedData = data.map(row => {
-        names.push(row['都道府県名']); // 都道府県名を追加
+        names.push(row['names']); // ID名を追加
         const values = Object.values(row);
         return values.slice(1).map(value => parseFloat(value) || 0);
     });
 
-    // 処理されたデータと都道府県名をコンソールに出力
+    // 処理されたデータとID名をコンソールに出力
     console.log(processedData, names);
-    return { processedData, names }; // 処理されたデータと都道府県名を返す
+    return { processedData, names }; // 処理されたデータとID名を返す
 }
 
 
 
 function performClusterAnalysis(data) {
-    // preprocessDataから処理されたデータと都道府県名を取得
+    // preprocessDataから処理されたデータとID名を取得
     const { processedData, names } = preprocessData(data);
 
     // ユーザー入力からkの値を取得
@@ -79,7 +79,7 @@ function performClusterAnalysis(data) {
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
     const clusters = kMeans(processedData, k);
-    displayResults(clusters, names); // 都道府県名も渡す
+    displayResults(clusters, names); // ID名も渡す
 }
 
 
