@@ -44,18 +44,20 @@ const kMeans = (data, k = 1) => {
 // イベントリスナーの設定
 document.getElementById('analyzeButton').addEventListener('click', processFile);
 
+
 function preprocessData(data) {
-    // データの前処理を実行
+    const names = []; // 都道府県名を保持する配列
     const processedData = data.map(row => {
-        // 都道府県名を除外し、数値データのみの配列を作成
+        names.push(row['都道府県名']); // 都道府県名を追加
         const values = Object.values(row);
         return values.slice(1).map(value => parseFloat(value) || 0);
     });
 
-    // 処理されたデータをコンソールに出力
-    console.log(processedData);
-    return processedData;
+    // 処理されたデータと都道府県名をコンソールに出力
+    console.log(processedData, names);
+    return { processedData, names }; // 処理されたデータと都道府県名を返す
 }
+
 
 function performClusterAnalysis(data) {
     const processedData = preprocessData(data);
