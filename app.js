@@ -1,10 +1,5 @@
 // k-meansクラスタリングのスニペット
 const kMeans = (data, k = 1) => {
-    // ... スニペットのコード ...
-};
-
-
-const kMeans = (data, k = 1) => {
   const centroids = data.slice(0, k);
   const distances = Array.from({ length: data.length }, () =>
     Array.from({ length: k }, () => 0)
