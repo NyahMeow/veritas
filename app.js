@@ -1,12 +1,57 @@
+// k-meansクラスタリングのスニペット
+const kMeans = (data, k = 1) => {
+    // ... スニペットのコード ...
+};
+
+
+const kMeans = (data, k = 1) => {
+  const centroids = data.slice(0, k);
+  const distances = Array.from({ length: data.length }, () =>
+    Array.from({ length: k }, () => 0)
+  );
+  const classes = Array.from({ length: data.length }, () => -1);
+  let itr = true;
+
+  while (itr) {
+    itr = false;
+
+    for (let d in data) {
+      for (let c = 0; c < k; c++) {
+        distances[d][c] = Math.hypot(
+          ...Object.keys(data[0]).map(key => data[d][key] - centroids[c][key])
+        );
+      }
+      const m = distances[d].indexOf(Math.min(...distances[d]));
+      if (classes[d] !== m) itr = true;
+      classes[d] = m;
+    }
+
+    for (let c = 0; c < k; c++) {
+      centroids[c] = Array.from({ length: data[0].length }, () => 0);
+      const size = data.reduce((acc, _, d) => {
+        if (classes[d] === c) {
+          acc++;
+          for (let i in data[0]) centroids[c][i] += data[d][i];
+        }
+        return acc;
+      }, 0);
+      for (let i in data[0]) {
+        centroids[c][i] = parseFloat(Number(centroids[c][i] / size).toFixed(2));
+      }
+    }
+  }
+
+  return classes;
+};
+
+
+
 // イベントリスナーの設定
 document.getElementById('analyzeButton').addEventListener('click', processFile);
-
 
 function preprocessData(data) {
     // データの前処理を実行
     const processedData = data.map(row => {
-        // データの前処理を行います
-        // 実際には数値データの抽出、正規化、変換などを行う必要があります
         // 都道府県名を除外し、数値データのみの配列を作成
         const values = Object.values(row);
         return values.slice(1).map(value => parseFloat(value) || 0);
@@ -17,8 +62,6 @@ function preprocessData(data) {
     return processedData;
 }
 
-
-
 function performClusterAnalysis(data) {
     const processedData = preprocessData(data);
 
@@ -27,29 +70,18 @@ function performClusterAnalysis(data) {
     let k = parseInt(kInput.value, 10);
 
     console.log("ユーザーが入力したkの値:", k);
-
-    // 処理されたデータの長さを出力
     console.log("処理されたデータの長さ:", processedData.length);
 
     // kが正の整数で、データポイント数より小さいことを確認
     if (isNaN(k) || k <= 0 || k >= processedData.length) {
-        k = Math.min(3, processedData.length - 1); // 適切なデフォルト値を設定
+        k = Math.min(3, processedData.length - 1);
         alert(`Invalid k value. Using default value of ${k}.`);
     }
 
-    const kmeans = new ML.KMeans({
-        k: k,
-        initialization: 'mostDistant',
-        seed: Math.random(),
-    });
-
-    const clusters = kmeans.predict(processedData);
+    // kMeansクラスタリング関数を使用してクラスタリングを実行
+    const clusters = kMeans(processedData, k);
     displayResults(clusters);
 }
-
-
-
-
 
 function processFile() {
     const fileInput = document.getElementById('fileInput');
@@ -75,10 +107,6 @@ function processFile() {
 
     reader.readAsBinaryString(file);
 }
-
-
-// ... その他の関数（preprocessData, displayResults）...
-
 
 function displayResults(clusters) {
     // 結果を表示します
