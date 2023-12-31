@@ -40,9 +40,58 @@ const kMeans = (data, k = 1) => {
 };
 
 
+// 新しいヘルパー関数の定義
+function aggregateDataByCluster(data, clusters) {
+    const clusterAggregates = {};
 
-// イベントリスナーの設定
-document.getElementById('analyzeButton').addEventListener('click', processFile);
+    clusters.forEach((cluster, index) => {
+        if (!clusterAggregates[cluster]) {
+            clusterAggregates[cluster] = {
+                dataPoints: [],
+                standardizedPoints: []
+            };
+        }
+        clusterAggregates[cluster].dataPoints.push(data.rawData[index]);
+        clusterAggregates[cluster].standardizedPoints.push(data.standardizedData[index]);
+    });
+
+    return clusterAggregates;
+}
+
+
+
+function calculateClusterStatistics(clusterAggregates) {
+    const clusterStats = {};
+
+    for (const cluster in clusterAggregates) {
+        const dataPoints = clusterAggregates[cluster].dataPoints;
+        const standardizedPoints = clusterAggregates[cluster].standardizedPoints;
+
+        clusterStats[cluster] = {
+            mean: calculateMean(dataPoints),
+            standardizedMean: calculateMean(standardizedPoints),
+            count: dataPoints.length
+        };
+    }
+
+    return clusterStats;
+}
+
+
+
+function displayClusterStatistics(clusterStats) {
+    let tableHtml = "<table><tr><th>クラスタ</th><th>平均値</th><th>標準化平均値</th><th>カウント</th></tr>";
+
+    for (const cluster in clusterStats) {
+        const stats = clusterStats[cluster];
+        tableHtml += `<tr><td>${cluster}</td><td>${stats.mean}</td><td>${stats.standardizedMean}</td><td>${stats.count}</td></tr>`;
+    }
+
+    tableHtml += "</table>";
+
+    document.getElementById('results').innerHTML = tableHtml;
+}
+
 
 
 function preprocessData(data) {
@@ -110,6 +159,10 @@ function performClusterAnalysis(data) {
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
     const clusters = kMeans(standardizedData, k);
+　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, clusters);
+    const clusterStats = calculateClusterStatistics(clusterAggregates);
+    
+    displayClusterStatistics(clusterStats);
     displayResults(clusters, names); // ID名も渡す
 }
 
@@ -139,6 +192,12 @@ function processFile() {
 
     reader.readAsBinaryString(file);
 }
+
+
+// イベントリスナーの設定
+document.getElementById('analyzeButton').addEventListener('click', processFile);
+
+
 
 
 // 結果を表示します
