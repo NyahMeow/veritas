@@ -60,9 +60,40 @@ function preprocessData(data) {
 
 
 
+function standardize(data) {
+    // 各列の平均と標準偏差を計算
+    const means = data[0].map((_, colIndex) => {
+        return mean(data.map(row => row[colIndex]));
+    });
+    const stdDevs = data[0].map((_, colIndex) => {
+        return standardDeviation(data.map(row => row[colIndex]));
+    });
+
+    // データを標準化
+    return data.map(row => {
+        return row.map((cell, index) => {
+            return (cell - means[index]) / stdDevs[index];
+        });
+    });
+}
+
+function mean(arr) {
+    return arr.reduce((acc, val) => acc + val, 0) / arr.length;
+}
+
+function standardDeviation(arr) {
+    const mu = mean(arr);
+    return Math.sqrt(arr.reduce((acc, val) => acc + Math.pow(val - mu, 2), 0) / arr.length);
+}
+
+
+
+
+
 function performClusterAnalysis(data) {
     // preprocessDataから処理されたデータとID名を取得
     const { processedData, names } = preprocessData(data);
+    const standardizedData = standardize(processedData);
 
     // ユーザー入力からkの値を取得
     const kInput = document.getElementById('kValue');
