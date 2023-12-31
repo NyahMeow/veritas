@@ -160,10 +160,27 @@ function performClusterAnalysis(data) {
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
     const clusters = kMeans(standardizedData, k);
+
+    if (k === 2) {
+        // Calculate distances to centroids for each data point
+        const distances = calculateDistancesToCentroids(processedData, centroids);
+        // Create the scatter plot
+        createScatterPlot(distances);
+    }
+  
 　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, clusters);
     const clusterStats = calculateClusterStatistics(clusterAggregates);
     
     displayClusterStatistics(clusterStats);
+
+    function calculateDistancesToCentroids(data, centroids) {
+    // Function to calculate distances to each of the two centroids
+    // ... implementation ...
+}
+    function createScatterPlot(distances) {
+    // Function to create the scatter plot using Plotly
+    // ... implementation ...
+}
     displayResults(clusters, names); // ID名も渡す
 }
 
