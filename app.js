@@ -40,7 +40,38 @@ const kMeans = (data, k = 1) => {
 };
 
 
-// 新しいヘルパー関数の定義
+// ヘルパー関数の定義
+
+function mean(arr) {
+    return arr.reduce((acc, val) => acc + val, 0) / arr.length;
+}
+
+function standardDeviation(arr) {
+    const mu = mean(arr);
+    return Math.sqrt(arr.reduce((acc, val) => acc + Math.pow(val - mu, 2), 0) / arr.length);
+}
+
+
+
+function standardize(data) {
+    // 各列の平均と標準偏差を計算
+    const means = data[0].map((_, colIndex) => {
+        return mean(data.map(row => row[colIndex]));
+    });
+    const stdDevs = data[0].map((_, colIndex) => {
+        return standardDeviation(data.map(row => row[colIndex]));
+    });
+
+    // データを標準化
+    return data.map(row => {
+        return row.map((cell, index) => {
+            return (cell - means[index]) / stdDevs[index];
+        });
+    });
+}
+
+
+
 function aggregateDataByCluster(data, clusters) {
     const clusterAggregates = {};
 
@@ -68,8 +99,8 @@ function calculateClusterStatistics(clusterAggregates) {
         const standardizedPoints = clusterAggregates[cluster].standardizedPoints;
 
         clusterStats[cluster] = {
-            mean: calculateMean(dataPoints),
-            standardizedMean: calculateMean(standardizedPoints),
+            mean: mean(dataPoints.flat()),
+            standardizedMean: mean(standardizedPoints.flat()),
             count: dataPoints.length
         };
     }
@@ -106,36 +137,6 @@ function preprocessData(data) {
     console.log(processedData, names);
     return { processedData, names }; // 処理されたデータとID名を返す
 }
-
-
-
-function standardize(data) {
-    // 各列の平均と標準偏差を計算
-    const means = data[0].map((_, colIndex) => {
-        return mean(data.map(row => row[colIndex]));
-    });
-    const stdDevs = data[0].map((_, colIndex) => {
-        return standardDeviation(data.map(row => row[colIndex]));
-    });
-
-    // データを標準化
-    return data.map(row => {
-        return row.map((cell, index) => {
-            return (cell - means[index]) / stdDevs[index];
-        });
-    });
-}
-
-function mean(arr) {
-    return arr.reduce((acc, val) => acc + val, 0) / arr.length;
-}
-
-function standardDeviation(arr) {
-    const mu = mean(arr);
-    return Math.sqrt(arr.reduce((acc, val) => acc + Math.pow(val - mu, 2), 0) / arr.length);
-}
-
-
 
 
 
