@@ -120,7 +120,7 @@ function displayClusterStatistics(clusterStats) {
 
     tableHtml += "</table>";
 
-    document.getElementById('results').innerHTML = tableHtml;
+    document.getElementById('clusterStatistics').innerHTML = tableHtml;
 }
 
 
@@ -211,5 +211,5 @@ function displayResults(clusters, names) {
 
     tableHtml += "</table>";
 
-    document.getElementById('results').innerHTML = tableHtml;
+    document.getElementById('clusterResults').innerHTML = tableHtml;
 }
