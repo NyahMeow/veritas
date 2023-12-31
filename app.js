@@ -109,7 +109,7 @@ function performClusterAnalysis(data) {
     }
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
-    const clusters = kMeans(processedData, k);
+    const clusters = kMeans(standardizedData, k);
     displayResults(clusters, names); // ID名も渡す
 }
 
