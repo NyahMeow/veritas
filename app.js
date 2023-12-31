@@ -163,7 +163,7 @@ function performClusterAnalysis(data) {
 
     if (k === 2) {
         // Calculate distances to centroids for each data point
-        const distances = calculateDistancesToCentroids(processedData, centroids);
+        const distances = calculateDistancesToCentroids(standardizedData, centroids);
         // Create the scatter plot
         createScatterPlot(distances);
     }
@@ -173,14 +173,36 @@ function performClusterAnalysis(data) {
     
     displayClusterStatistics(clusterStats);
 
-    function calculateDistancesToCentroids(data, centroids) {
+    function calculateDistancesToCentroids(standardizedData, centroids) {
     // Function to calculate distances to each of the two centroids
-    // ... implementation ...
+      return data.map(point => {
+        return centroids.map(centroid => {
+            // Calculate Euclidean distance from point to centroid
+            return Math.sqrt(centroid.reduce((sum, c, i) => sum + Math.pow(c - point[i], 2), 0));
+        });
+    });
 }
+
     function createScatterPlot(distances) {
-    // Function to create the scatter plot using Plotly
-    // ... implementation ...
-}
+      // Function to create the scatter plot using Plotly
+      // Assuming distances is an array of [distanceToCentroid1, distanceToCentroid2] for each point
+      const trace = {
+        x: distances.map(d => d[0]), // Distance to first centroid
+        y: distances.map(d => d[1]), // Distance to second centroid
+        mode: 'markers',
+        type: 'scatter'
+      };
+
+      const layout = {
+        title: '2D Scatter Plot of Cluster Distances',
+        xaxis: { title: 'Distance to Centroid 1' },
+        yaxis: { title: 'Distance to Centroid 2' }
+      };
+      
+      Plotly.newPlot('plotContainer', [trace], layout);
+    }
+
+  
     displayResults(clusters, names); // ID名も渡す
 }
 
