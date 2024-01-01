@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster Analysis App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <h1>Cluster Analysis App</h1>
+    <h2>k-means Clustering</h2>
+    <!-- ファイル入力フィールドのためのラベルを追加 -->
+    <label for="fileInput">ファイルを選択:</label>
+    <input type="file" id="fileInput">
+    <input type="number" id="kValue" placeholder="Enter k value (Number of Clusters)">
+    <button id="analyzeButton">Analyze</button>
+    <div id="clusterStatistics"></div>
+    <div id="clusterResults"></div>
+
+    <!-- ... スクリプトの読み込み ... -->
+</body>
+</html>
