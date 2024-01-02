@@ -149,6 +149,7 @@ function displayClusterStatistics(clusterStats) {
     tableHtml += "</table>";
 
     document.getElementById('results').innerHTML = tableHtml;
+}
   
 
 
