@@ -148,7 +148,7 @@ function displayClusterStatistics(clusterStats) {
 
     tableHtml += "</table>";
 
-    document.getElementById('results_stats').innerHTML = tableHtml;
+    document.getElementById('clusterStatistics').innerHTML = tableHtml;
 }
   
 
@@ -239,5 +239,5 @@ function displayResults(clusters, names) {
 
     tableHtml += "</table>";
 
-    document.getElementById('clusterResults').innerHTML = tableHtml;
+    document.getElementById('clusterResults').innerHTML = resultsHtml;
 }
