@@ -62,12 +62,19 @@ function standardize(data) {
         return standardDeviation(data.map(row => row[colIndex]));
     });
 
-    // データを標準化
-    return data.map(row => {
+    console.log("Means:", means); // Log the means
+    console.log("Standard Deviations:", stdDevs); // Log the standard deviations
+
+     // Standardize the data
+    const standardizedData = data.map(row => {
         return row.map((cell, index) => {
             return (cell - means[index]) / stdDevs[index];
         });
     });
+
+    console.log("Standardized Data:", standardizedData); // Log the standardized data
+
+    return standardizedData;
 }
 
 
