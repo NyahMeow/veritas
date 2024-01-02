@@ -124,7 +124,7 @@ function calculateMeansForEachFeature(dataPoints) {
 
 
 
-function displayClusterStatistics(clusterStats) {
+function displayClusterStatistics(clusterStats, features) {
     let meansTableHtml = "<table><tr><th>Cluster</th>";
     let zScoreMeansTableHtml = "<table><tr><th>Cluster</th>";
     let countTableHtml = "<table><tr><th>Cluster</th><th>Count</th></tr>";
@@ -133,10 +133,11 @@ function displayClusterStatistics(clusterStats) {
     const numberOfFeatures = clusterStats[Object.keys(clusterStats)[0]].means.length;
 
     // Headers for means and z-score means tables
-    for (let i = 0; i < numberOfFeatures; i++) {
-        meansTableHtml += `<th>Mean of Feature ${i+1}</th>`;
-        zScoreMeansTableHtml += `<th>Z-Score Mean of Feature ${i+1}</th>`;
-    }
+    // Use feature names for table headers
+    features.forEach(feature => {
+         meansTableHtml += `<th>Mean of ${feature}</th>`;
+        zScoreMeansTableHtml += `<th>Z-Score Mean of ${feature}</th>`;
+    });
 
     meansTableHtml += "</tr>";
     zScoreMeansTableHtml += "</tr>";
@@ -173,25 +174,23 @@ function displayClusterStatistics(clusterStats) {
 
 
 function preprocessData(data) {
-    const names = []; // ID名を保持する配列
+    const names = []; // To store ID names
+    const features = Object.keys(data[0]).slice(1); // Extract feature names, assuming they are in the first row
     const processedData = data.map(row => {
-        names.push(row['names']); // ID名を追加
-        const values = Object.values(row);
-        return values.slice(1).map(value => parseFloat(value) || 0);
+        names.push(row['names']); // ID names
+        return features.map(feature => parseFloat(row[feature]) || 0);
     });
 
-    // 処理されたデータとID名をコンソールに出力
-    console.log(processedData, names);
-    return { processedData, names }; // 処理されたデータとID名を返す
+    console.log(processedData, names, features);
+    return { processedData, names, features }; // Return processed data, names, and feature names
 }
-
 
 
 function performClusterAnalysis(data) {
     // preprocessDataから処理されたデータとID名を取得
-    const { processedData, names } = preprocessData(data);
+    const { processedData, names, features } = preprocessData(data);
     const standardizedData = standardize(processedData);
-
+  
     // ユーザー入力からkの値を取得
     const kInput = document.getElementById('kValue');
     let k = parseInt(kInput.value, 10);
@@ -210,7 +209,7 @@ function performClusterAnalysis(data) {
 　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, clusters);
     const clusterStats = calculateClusterStatistics(clusterAggregates);
     
-    displayClusterStatistics(clusterStats);
+    displayClusterStatistics(clusterStats, features);// Pass feature names
     displayResults(clusters, names); // ID名も渡す
 }
 
