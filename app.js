@@ -125,14 +125,23 @@ function calculateMeansForEachFeature(dataPoints) {
 
 
 function displayClusterStatistics(clusterStats) {
-    let tableHtml = "<table><tr><th>Cluster</th>";
+    let meansTableHtml = "<table><tr><th>Cluster</th>";
+    let zScoreMeansTableHtml = "<table><tr><th>Cluster</th>";
+    let countTableHtml = "<table><tr><th>Cluster</th><th>Count</th></tr>";
 
     // Assuming the number of features is the same for all clusters
     const numberOfFeatures = clusterStats[Object.keys(clusterStats)[0]].means.length;
+
+    // Headers for means and z-score means tables
     for (let i = 0; i < numberOfFeatures; i++) {
-        tableHtml += `<th>Mean of Feature ${i+1}</th><th>Z-Score Mean of Feature ${i+1}</th>`;
+        meansTableHtml += `<th>Mean of Feature ${i+1}</th>`;
+        zScoreMeansTableHtml += `<th>Z-Score Mean of Feature ${i+1}</th>`;
     }
-    tableHtml += "<th>Count</th></tr>";
+
+    meansTableHtml += "</tr>";
+    zScoreMeansTableHtml += "</tr>";
+
+  
 
     for (const cluster in clusterStats) {
         const stats = clusterStats[cluster];
