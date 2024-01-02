@@ -99,8 +99,8 @@ function calculateClusterStatistics(clusterAggregates) {
         const standardizedPoints = clusterAggregates[cluster].standardizedPoints;
 
         clusterStats[cluster] = {
-            mean: mean(dataPoints.flat()),
-            standardizedMean: mean(standardizedPoints.flat()),
+            means: calculateMeansForEachFeature(dataPoints),
+            standardizedMeans: calculateMeansForEachFeature(standardizedPoints),
             count: dataPoints.length
         };
     }
@@ -110,19 +110,46 @@ function calculateClusterStatistics(clusterAggregates) {
 
 
 
+function calculateMeansForEachFeature(dataPoints) {
+    const means = [];
+    const numberOfFeatures = dataPoints[0].length;
+
+    for (let i = 0; i < numberOfFeatures; i++) {
+        let featureMean = mean(dataPoints.map(point => point[i]));
+        means.push(featureMean);
+    }
+
+    return means;
+}
+
+
+
 function displayClusterStatistics(clusterStats) {
-    let tableHtml = "<table><tr><th>クラスタ</th><th>平均値</th><th>標準化平均値</th><th>カウント</th></tr>";
+    let tableHtml = "<table><tr><th>Cluster</th>";
+
+    // Assuming the number of features is the same for all clusters
+    const numberOfFeatures = clusterStats[Object.keys(clusterStats)[0]].means.length;
+    for (let i = 0; i < numberOfFeatures; i++) {
+        tableHtml += `<th>Mean of Feature ${i+1}</th><th>Z-Score Mean of Feature ${i+1}</th>`;
+    }
+    tableHtml += "<th>Count</th></tr>";
 
     for (const cluster in clusterStats) {
         const stats = clusterStats[cluster];
-        tableHtml += `<tr><td>${cluster}</td><td>${stats.mean}</td><td>${stats.standardizedMean}</td><td>${stats.count}</td></tr>`;
+        tableHtml += `<tr><td>${cluster}</td>`;
+        stats.means.forEach(mean => {
+            tableHtml += `<td>${mean.toFixed(2)}</td>`;
+        });
+        stats.standardizedMeans.forEach(standardizedMean => {
+            tableHtml += `<td>${standardizedMean.toFixed(2)}</td>`;
+        });
+        tableHtml += `<td>${stats.count}</td></tr>`;
     }
 
     tableHtml += "</table>";
 
-    document.getElementById('clusterStatistics').innerHTML = tableHtml;
-}
-
+    document.getElementById('results').innerHTML = tableHtml;
+  
 
 
 function preprocessData(data) {
