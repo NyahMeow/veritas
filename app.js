@@ -142,24 +142,34 @@ function displayClusterStatistics(clusterStats) {
     zScoreMeansTableHtml += "</tr>";
 
   
-
+    // Fill tables with data
     for (const cluster in clusterStats) {
         const stats = clusterStats[cluster];
-        tableHtml += `<tr><td>${cluster}</td>`;
-        stats.means.forEach(mean => {
-            tableHtml += `<td>${mean.toFixed(2)}</td>`;
+      
+        meansTableHtml += `<tr><td>${cluster}</td>`;
+        zScoreMeansTableHtml += `<tr><td>${cluster}</td>`;
+        countTableHtml += `<tr><td>${cluster}</td><td>${stats.count}</td></tr>`;
+
+       stats.means.forEach(mean => {
+            meansTableHtml += `<td>${mean.toFixed(2)}</td>`;
         });
         stats.standardizedMeans.forEach(standardizedMean => {
-            tableHtml += `<td>${standardizedMean.toFixed(2)}</td>`;
+            zScoreMeansTableHtml += `<td>${standardizedMean.toFixed(2)}</td>`;
         });
-        tableHtml += `<td>${stats.count}</td></tr>`;
+
+        meansTableHtml += "</tr>";
+        zScoreMeansTableHtml += "</tr>";
     }
 
-    tableHtml += "</table>";
+    meansTableHtml += "</table>";
+    zScoreMeansTableHtml += "</table>";
+    countTableHtml += "</table>";
 
-    document.getElementById('clusterStatistics').innerHTML = tableHtml;
+    // Display the tables
+    document.getElementById('clusterMeans').innerHTML = meansTableHtml;
+    document.getElementById('clusterZScoreMeans').innerHTML = zScoreMeansTableHtml;
+    document.getElementById('clusterCounts').innerHTML = countTableHtml;
 }
-  
 
 
 function preprocessData(data) {
