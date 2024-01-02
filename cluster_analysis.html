@@ -11,9 +11,10 @@
     <h1>Cluster Analysis App</h1>
     <h2>k-means Clustering</h2>
     <!-- ファイル入力フィールドのためのラベルを追加 -->
-    <label for="fileInput">ファイルを選択:</label>
+    <label for="fileInput">Choose an excel file:</label>
     <input type="file" id="fileInput"><br>
-    <input type="number" id="kValue" placeholder="Enter k value (Number of Clusters)"><br>
+    <label for="kValue placeholder">Input # of clusters:</label>
+    <input type="number" id="kValue" placeholder="Enter k value (Number of Clusters)">
     <button id="analyzeButton">Analyze</button>
     <div id="clusterMeans"></div><br>
     <div id="clusterZScoreMeans"></div><br>
