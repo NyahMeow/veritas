@@ -231,13 +231,13 @@ document.getElementById('analyzeButton').addEventListener('click', processFile);
 
 // 結果を表示します
 function displayResults(clusters, names) {
-    let tableHtml = "<table><tr><th>ID名</th><th>クラスタ</th></tr>";
+    let resultsHtml = "<table><tr><th>ID名</th><th>クラスタ</th></tr>";
 
     clusters.forEach((cluster, index) => {
-        tableHtml += `<tr><td>${names[index]}</td><td>${cluster}</td></tr>`;
+        resultsHtml += `<tr><td>${names[index]}</td><td>${cluster}</td></tr>`;
     });
 
-    tableHtml += "</table>";
+    resultsHtml += "</table>";
 
     document.getElementById('clusterResults').innerHTML = resultsHtml;
 }
