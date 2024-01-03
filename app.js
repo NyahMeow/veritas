@@ -220,7 +220,7 @@ function performClusterAnalysis(data) {
     // Retrieve classes and distances
     const { classes, pointToCentroidDistances } = kMeans(standardizedData, k);
   
-　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, clusters);
+　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, classes);
     const clusterStats = calculateClusterStatistics(clusterAggregates);
     
     displayClusterStatistics(clusterStats, features);// Pass feature names
