@@ -62,12 +62,19 @@ function standardize(data) {
         return standardDeviation(data.map(row => row[colIndex]));
     });
 
-    // データを標準化
-    return data.map(row => {
+    console.log("Means:", means); // Log the means
+    console.log("Standard Deviations:", stdDevs); // Log the standard deviations
+
+     // Standardize the data
+    const standardizedData = data.map(row => {
         return row.map((cell, index) => {
             return (cell - means[index]) / stdDevs[index];
         });
     });
+
+    console.log("Standardized Data:", standardizedData); // Log the standardized data
+
+    return standardizedData;
 }
 
 
@@ -99,8 +106,8 @@ function calculateClusterStatistics(clusterAggregates) {
         const standardizedPoints = clusterAggregates[cluster].standardizedPoints;
 
         clusterStats[cluster] = {
-            mean: mean(dataPoints.flat()),
-            standardizedMean: mean(standardizedPoints.flat()),
+            means: calculateMeansForEachFeature(dataPoints),
+            standardizedMeans: calculateMeansForEachFeature(standardizedPoints),
             count: dataPoints.length
         };
     }
@@ -110,41 +117,87 @@ function calculateClusterStatistics(clusterAggregates) {
 
 
 
-function displayClusterStatistics(clusterStats) {
-    let tableHtml = "<table><tr><th>クラスタ</th><th>平均値</th><th>標準化平均値</th><th>カウント</th></tr>";
+function calculateMeansForEachFeature(dataPoints) {
+    const means = [];
+    const numberOfFeatures = dataPoints[0].length;
 
-    for (const cluster in clusterStats) {
-        const stats = clusterStats[cluster];
-        tableHtml += `<tr><td>${cluster}</td><td>${stats.mean}</td><td>${stats.standardizedMean}</td><td>${stats.count}</td></tr>`;
+    for (let i = 0; i < numberOfFeatures; i++) {
+        let featureMean = mean(dataPoints.map(point => point[i]));
+        means.push(featureMean);
     }
 
-    tableHtml += "</table>";
-
-    document.getElementById('clusterStatistics').innerHTML = tableHtml;
+    return means;
 }
 
+
+
+function displayClusterStatistics(clusterStats, features) {
+    let meansTableHtml = "<table><tr><th>Cluster</th>";
+    let zScoreMeansTableHtml = "<table><tr><th>Cluster</th>";
+    let countTableHtml = "<table><tr><th>Cluster</th><th>Count</th></tr>";
+
+    // Assuming the number of features is the same for all clusters
+    const numberOfFeatures = clusterStats[Object.keys(clusterStats)[0]].means.length;
+
+    // Headers for means and z-score means tables
+    // Use feature names for table headers
+    features.forEach(feature => {
+         meansTableHtml += `<th>Mean of ${feature}</th>`;
+        zScoreMeansTableHtml += `<th>Z-Score Mean of ${feature}</th>`;
+    });
+
+    meansTableHtml += "</tr>";
+    zScoreMeansTableHtml += "</tr>";
+
+  
+    // Fill tables with data
+    for (const cluster in clusterStats) {
+        const stats = clusterStats[cluster];
+      
+        meansTableHtml += `<tr><td>${cluster}</td>`;
+        zScoreMeansTableHtml += `<tr><td>${cluster}</td>`;
+        countTableHtml += `<tr><td>${cluster}</td><td>${stats.count}</td></tr>`;
+
+       stats.means.forEach(mean => {
+            meansTableHtml += `<td>${mean.toFixed(2)}</td>`;
+        });
+        stats.standardizedMeans.forEach(standardizedMean => {
+            zScoreMeansTableHtml += `<td>${standardizedMean.toFixed(2)}</td>`;
+        });
+
+        meansTableHtml += "</tr>";
+        zScoreMeansTableHtml += "</tr>";
+    }
+
+    meansTableHtml += "</table>";
+    zScoreMeansTableHtml += "</table>";
+    countTableHtml += "</table>";
+
+    // Display the tables
+    document.getElementById('clusterMeans').innerHTML = meansTableHtml;
+    document.getElementById('clusterZScoreMeans').innerHTML = zScoreMeansTableHtml;
+    document.getElementById('clusterCounts').innerHTML = countTableHtml;
+}
 
 
 function preprocessData(data) {
-    const names = []; // ID名を保持する配列
+    const names = []; // To store ID names
+    const features = Object.keys(data[0]).slice(1); // Extract feature names, assuming they are in the first row
     const processedData = data.map(row => {
-        names.push(row['names']); // ID名を追加
-        const values = Object.values(row);
-        return values.slice(1).map(value => parseFloat(value) || 0);
+        names.push(row['names']); // ID names
+        return features.map(feature => parseFloat(row[feature]) || 0);
     });
 
-    // 処理されたデータとID名をコンソールに出力
-    console.log(processedData, names);
-    return { processedData, names }; // 処理されたデータとID名を返す
+    console.log(processedData, names, features);
+    return { processedData, names, features }; // Return processed data, names, and feature names
 }
-
 
 
 function performClusterAnalysis(data) {
     // preprocessDataから処理されたデータとID名を取得
-    const { processedData, names } = preprocessData(data);
+    const { processedData, names, features } = preprocessData(data);
     const standardizedData = standardize(processedData);
-
+  
     // ユーザー入力からkの値を取得
     const kInput = document.getElementById('kValue');
     let k = parseInt(kInput.value, 10);
@@ -163,7 +216,7 @@ function performClusterAnalysis(data) {
 　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, clusters);
     const clusterStats = calculateClusterStatistics(clusterAggregates);
     
-    displayClusterStatistics(clusterStats);
+    displayClusterStatistics(clusterStats, features);// Pass feature names
     displayResults(clusters, names); // ID名も渡す
 }
 
@@ -203,13 +256,13 @@ document.getElementById('analyzeButton').addEventListener('click', processFile);
 
 // 結果を表示します
 function displayResults(clusters, names) {
-    let tableHtml = "<table><tr><th>ID名</th><th>クラスタ</th></tr>";
+    let resultsHtml = "<table><tr><th>ID名</th><th>クラスタ</th></tr>";
 
     clusters.forEach((cluster, index) => {
-        tableHtml += `<tr><td>${names[index]}</td><td>${cluster}</td></tr>`;
+        resultsHtml += `<tr><td>${names[index]}</td><td>${cluster}</td></tr>`;
     });
 
-    tableHtml += "</table>";
+    resultsHtml += "</table>";
 
-    document.getElementById('clusterResults').innerHTML = tableHtml;
+    document.getElementById('clusterResults').innerHTML = resultsHtml;
 }
