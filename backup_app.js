@@ -6,6 +6,7 @@ const kMeans = (data, k = 1) => {
   );
   const classes = Array.from({ length: data.length }, () => -1);
   let itr = true;
+  const pointToCentroidDistances = Array(data.length).fill(0); // New array to store distances
 
   while (itr) {
     itr = false;
@@ -19,6 +20,7 @@ const kMeans = (data, k = 1) => {
       const m = distances[d].indexOf(Math.min(...distances[d]));
       if (classes[d] !== m) itr = true;
       classes[d] = m;
+      pointToCentroidDistances[d] = distances[d][m]; // Store the distance to the closest centroid
     }
 
     for (let c = 0; c < k; c++) {
@@ -36,8 +38,9 @@ const kMeans = (data, k = 1) => {
     }
   }
 
-  return classes;
+  return { classes, pointToCentroidDistances }; // Return both classes and distances
 };
+
 
 
 // ヘルパー関数の定義
@@ -212,12 +215,16 @@ function performClusterAnalysis(data) {
     }
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
-    const clusters = kMeans(standardizedData, k);
-　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, clusters);
+    // const clusters = kMeans(standardizedData, k);
+
+    // Retrieve classes and distances
+    const { classes, pointToCentroidDistances } = kMeans(standardizedData, k);
+  
+　  const clusterAggregates = aggregateDataByCluster({ rawData: processedData, standardizedData }, classes);
     const clusterStats = calculateClusterStatistics(clusterAggregates);
     
     displayClusterStatistics(clusterStats, features);// Pass feature names
-    displayResults(clusters, names); // ID名も渡す
+    displayResults(classes, names, pointToCentroidDistances); // ID名も渡す// Pass distances to display function
 }
 
 
@@ -255,11 +262,11 @@ document.getElementById('analyzeButton').addEventListener('click', processFile);
 
 
 // 結果を表示します
-function displayResults(clusters, names) {
-    let resultsHtml = "<table><tr><th>ID名</th><th>クラスタ</th></tr>";
+function displayResults(clusters, names, distances) {
+    let resultsHtml = "<table><tr><th>ID</th><th>クラスタ</th><th>Distance to Centroid</th></tr>";
 
     clusters.forEach((cluster, index) => {
-        resultsHtml += `<tr><td>${names[index]}</td><td>${cluster}</td></tr>`;
+        resultsHtml += `<tr><td>${names[index]}</td><td>${cluster}</td><td>${distances[index].toFixed(2)}</td></tr>`;
     });
 
     resultsHtml += "</table>";
