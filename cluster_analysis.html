@@ -9,6 +9,17 @@
     <script src="app.js" defer></script>
 </head>
 <body>
+    <script>
+        var password = 'Dr.Satoshi Maeda'; // Set your password here
+        var userPassword = prompt("Who created this webapp?:");
+
+        if(userPassword !== password) {
+            document.body.innerHTML = '<h1>Access Denied</h1>'; // Replace content if password is wrong
+            // Or redirect to another page
+            // window.location.href = '/access-denied.html';
+        }
+    </script>
+    
     <div class="container"> <!-- Wrapper for the content -->
         <h1>Cluster Analysis App</h1>
         <h2>k-means Clustering</h2>
@@ -24,6 +35,7 @@
         <br>
         <button id="downloadExcel">Download Excel</button>
     </div>
+    
     <script>
         document.getElementById('downloadExcel').addEventListener('click', function() {
             let wb = XLSX.utils.book_new(); // New workbook
