@@ -215,8 +215,6 @@ function performClusterAnalysis(data) {
     }
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
-    // const clusters = kMeans(standardizedData, k);
-
     // Retrieve classes and distances
     const { classes, pointToCentroidDistances } = kMeans(standardizedData, k);
   
