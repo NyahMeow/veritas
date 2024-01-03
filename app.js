@@ -263,7 +263,7 @@ document.getElementById('analyzeButton').addEventListener('click', processFile);
 
 // 結果を表示します
 function displayResults(clusters, names, distances) {
-    let resultsHtml = "<table><tr><th>ID名</th><th>クラスタ</th><th>Distance to Centroid</th></tr>";
+    let resultsHtml = "<table><tr><th>ID</th><th>クラスタ</th><th>Distance to Centroid</th></tr>";
 
     clusters.forEach((cluster, index) => {
         resultsHtml += `<tr><td>${names[index]}</td><td>${cluster}</td><td>${distances[index].toFixed(2)}</td></tr>`;
