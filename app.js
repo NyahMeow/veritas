@@ -215,7 +215,7 @@ function performClusterAnalysis(data) {
     }
 
     // kMeansクラスタリング関数を使用してクラスタリングを実行
-    const clusters = kMeans(standardizedData, k);
+    // const clusters = kMeans(standardizedData, k);
 
     // Retrieve classes and distances
     const { classes, pointToCentroidDistances } = kMeans(standardizedData, k);
@@ -224,7 +224,7 @@ function performClusterAnalysis(data) {
     const clusterStats = calculateClusterStatistics(clusterAggregates);
     
     displayClusterStatistics(clusterStats, features);// Pass feature names
-    displayResults(clusters, names, pointToCentroidDistances); // ID名も渡す// Pass distances to display function
+    displayResults(classes, names, pointToCentroidDistances); // ID名も渡す// Pass distances to display function
 }
 
 
