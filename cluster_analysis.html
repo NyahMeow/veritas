@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="app.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="container"> <!-- Wrapper for the content -->
@@ -17,7 +16,7 @@
         <input type="file" id="fileInput"><br><br>
         <label for="kValue">Input # of clusters:</label>
         <input type="number" id="kValue" placeholder="Enter k value (Number of Clusters)">
-        <center></center><button id="analyzeButton">Analyze</button><br><br></center>
+        <button id="analyzeButton" style="margin-top: 10px;">Analyze</button><br><br>
         <div id="clusterMeans"></div><br>
         <div id="clusterZScoreMeans"></div><br>
         <div id="clusterCounts"></div><br>
@@ -25,5 +24,18 @@
         <br>
         <button id="downloadExcel">Download Excel</button>
     </div>
+    <script>
+        document.getElementById('downloadExcel').addEventListener('click', function() {
+            let wb = XLSX.utils.book_new(); // New workbook
+
+        // For each table you want to download
+            ["clusterMeans", "clusterZScoreMeans", "clusterCounts", "clusterResults"].forEach((tableId, index) => {
+                let ws = XLSX.utils.table_to_sheet(document.getElementById(tableId)); // Convert table to sheet
+                XLSX.utils.book_append_sheet(wb, ws, `Table${index + 1}`); // Append sheet to workbook
+            });
+
+            XLSX.writeFile(wb, "ClusterAnalysis.xlsx"); // Write workbook to file
+            });
+    </script>
 </body>
 </html>
