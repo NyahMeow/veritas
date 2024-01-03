@@ -6,6 +6,7 @@ const kMeans = (data, k = 1) => {
   );
   const classes = Array.from({ length: data.length }, () => -1);
   let itr = true;
+  const pointToCentroidDistances = Array(data.length).fill(0); // New array to store distances
 
   while (itr) {
     itr = false;
@@ -19,6 +20,7 @@ const kMeans = (data, k = 1) => {
       const m = distances[d].indexOf(Math.min(...distances[d]));
       if (classes[d] !== m) itr = true;
       classes[d] = m;
+      pointToCentroidDistances[d] = distances[d][m]; // Store the distance to the closest centroid
     }
 
     for (let c = 0; c < k; c++) {
@@ -36,8 +38,9 @@ const kMeans = (data, k = 1) => {
     }
   }
 
-  return classes;
+  return { classes, pointToCentroidDistances }; // Return both classes and distances
 };
+
 
 
 // ヘルパー関数の定義
