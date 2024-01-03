@@ -10,51 +10,52 @@ nav a {
 
 
 
+/* Updated CSS */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 20px; /* Add padding for better spacing */
     background-color: #f7f7f7;
 }
+
 .container {
-    text-align: center;
+    max-width: 800px; /* Max width to control container size */
+    margin: auto; /* Center the container */
     padding: 20px;
     border-radius: 10px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 label, button {
     display: block;
     margin: 10px 0;
 }
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-    }
-}
-@media (min-width: 601px) {
-    .container {
-        width: 400px;
-    }
-}
+
 table {
-    border-collapse: collapse; /* Ensures borders collapse and look neat */
-    width: 100%; /* Table width */
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto; /* Center the table */
 }
+
 th, td {
-    border: 1px solid black; /* Border around each cell */
-    padding: 8px; /* Padding inside each cell */
-    text-align: left; /* Align text to left */
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
 }
+
 th {
-    background-color: #f2f2f2; /* Light gray background for headers */
-    font-weight: bold; /* Make header font bold */
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
+
 tr:nth-child(even) {
-    background-color: #f9f9f9; /* Zebra striping for rows */
+    background-color: #f9f9f9;
+}
+
+@media (max-width: 800px) {
+    .container, table {
+        width: 100%; /* Table and container take full width on small screens */
+    }
 }
 
