@@ -6,20 +6,19 @@
     <title>Cluster Analysis App</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script src="app.js" defer></script>
-</head>
-<body>
     <script>
         var password = 'Dr.Satoshi Maeda'; // Set your password here
-        var userPassword = prompt("Who created this webapp?:");
+        var userPassword = prompt("Please enter the password to access this page:");
 
         if(userPassword !== password) {
-            document.body.innerHTML = '<h1>Access Denied</h1>'; // Replace content if password is wrong
-            // Or redirect to another page
-            // window.location.href = '/access-denied.html';
+            document.write('<h1>Access Denied</h1>'); // Replace entire document if password is wrong
+            document.close(); // Close the document to prevent further loading
         }
-    </script>
+    </script>    
+    <script src="app.js" defer></script>
     
+</head>
+<body>
     <div class="container"> <!-- Wrapper for the content -->
         <h1>Cluster Analysis App</h1>
         <h2>k-means Clustering</h2>
