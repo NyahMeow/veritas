@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cluster Analysis App</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <style>
+        body {
+            display: none; /* Initially hide the body content */
+        }
+    </style>
     <script>
-        (function() {
+        window.onload = function() {
             var password = 'Dr.Satoshi Maeda'; // Set your password here
             var userPassword = prompt("Who created this webapp?:");
 
-            if(userPassword !== password) {
-                document.write('<h1>Access Denied</h1>'); // Replace entire document if password is wrong
-                document.close(); // Close the document to prevent further loading
-                return; // Stop the execution of further script
+            if(userPassword === password) {
+                document.body.style.display = 'block'; // Show the content if password is correct
+            } else {
+                alert('Access Denied');
             }
-        })();
+        };
     </script>
     <script src="app.js" defer></script>
 </head>
 <body>
-    <div class="container"> <!-- Wrapper for the content -->
+    <div class="container">
         <h1>Cluster Analysis App</h1>
         <h2>k-means Clustering</h2>
         <label for="fileInput">Choose an excel file:</label>
@@ -40,13 +45,10 @@
     <script>
         document.getElementById('downloadExcel').addEventListener('click', function() {
             let wb = XLSX.utils.book_new(); // New workbook
-
-            // For each table you want to download
             ["clusterMeans", "clusterZScoreMeans", "clusterCounts", "clusterResults"].forEach((tableId, index) => {
                 let ws = XLSX.utils.table_to_sheet(document.getElementById(tableId)); // Convert table to sheet
                 XLSX.utils.book_append_sheet(wb, ws, `Table${index + 1}`); // Append sheet to workbook
             });
-
             XLSX.writeFile(wb, "ClusterAnalysis.xlsx"); // Write workbook to file
         });
     </script>
