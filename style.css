@@ -79,19 +79,43 @@ tr:nth-child(even) {
 }
 
 
-.important-note {
-    background-color: #e6f7ff; /* Light blue background */
-    border-radius: 15px; /* Rounded corners on all sides */
-    padding: 15px; /* Padding inside the box */
-    margin: 20px 0; /* Margin around the box */
-    list-style-position: inside; /* Align bullet points inside */
+
+#important-note {
+    position: relative;
+    padding: 20px;
+    background-color: transparent;
 }
 
-.important-note ul {
-    text-align: left; /* Align text to the left */
-    padding: 0; /* Remove default padding */
+#important-note::before,
+#important-note::after {
+    content: '';
+    position: absolute;
+    width: 20px; /* Adjust corner width */
+    height: 20px; /* Adjust corner height */
+    background-color: #ADD8E6; /* Light blue background */
 }
 
-.important-note li {
-    margin-bottom: 10px; /* Space between bullet points */
+#important-note::before {
+    top: 0;
+    left: 0;
+    border-top-left-radius: 15px;
+}
+
+#important-note::after {
+    bottom: 0;
+    right: 0;
+    border-bottom-right-radius: 15px;
+}
+
+
+#important-note::before {
+    top: 0;
+    left: 0;
+    border-top-right-radius: 15px;
+}
+
+#important-note::after {
+    bottom: 0;
+    right: 0;
+    border-bottom-left-radius: 15px;
 }
