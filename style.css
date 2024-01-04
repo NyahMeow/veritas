@@ -59,3 +59,16 @@ tr:nth-child(even) {
     }
 }
 
+
+.gradient-line {
+    height: 5px; /* Thickness of the line */
+    background: linear-gradient(to right, #e0f7fa, #80deea, #e0f7fa); /* Pale blue gradient */
+    margin: 10px 0; /* Space above and below the line */
+}
+
+.subtitle {
+    font-size: 0.9em; /* Slightly smaller font size */
+    margin-bottom: 20px; /* Space below the subtitle */
+}
+
+
