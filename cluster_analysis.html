@@ -37,7 +37,17 @@
         <div class="gradient-line"></div>
         
         <h2>k-means Clustering</h2>
-        <p><b>IMPORTANT!! Confirm that the dataset is in a structured data format, and ensure that the label of the leftmost column is entered as 'names' before loading the file.</b></p>
+        
+        <!-- New container for the IMPORTANT notice -->
+        <div class="important-notice">
+            <ul>
+                <li>Confirm that the dataset is tidy structured.</li>
+                <li>Ensure that the label of the leftmost column is entered as 'names' before loading the file.</li>
+                <li>Rows containing any missing values should be excluded before loading the file.</li>
+                <li>The calculation process used in this app differs from those in established statistical software like SPSS, leading to slightly different results. For more sophisticated methods, consider using SPSS, Stata, or similar software. </li>
+            </ul>
+        </div>
+                
         <label for="fileInput">Choose an excel file:</label>
         <input type="file" id="fileInput"><br><br>
         <label for="kValue">Input # of clusters:</label>
