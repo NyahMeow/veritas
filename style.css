@@ -80,45 +80,18 @@ tr:nth-child(even) {
 
 
 .important-note {
-    position: relative; /* Position relative for pseudo-elements */
-    padding: 10px; /* Padding inside the box */
-    margin: 10px 0; /* Margin around the box */
-    background: transparent; /* Transparent background */
-    text-align: left; /* Align text to left */
+    background-color: #e6f7ff; /* Light blue background */
+    border-radius: 15px; /* Rounded corners on all sides */
+    padding: 15px; /* Padding inside the box */
+    margin: 20px 0; /* Margin around the box */
+    list-style-position: inside; /* Align bullet points inside */
 }
 
 .important-note ul {
-    list-style: disc inside; /* Bullet points inside the box */
+    text-align: left; /* Align text to the left */
     padding: 0; /* Remove default padding */
 }
 
 .important-note li {
-    margin-bottom: 5px; /* Space between bullet points */
+    margin-bottom: 10px; /* Space between bullet points */
 }
-
-.important-note::before, .important-note::after {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-color: #ADD8E6; /* Border color */
-    border-width: 2px; /* Border thickness */
-}
-
-.important-note::before {
-    border-width: 2px 0 0 2px; /* Top and left borders */
-    border-radius: 15px; /* Rounded corners */
-    top: 0;
-    left: 0;
-    width: 20px; /* Corner width */
-    height: 20px; /* Corner height */
-}
-
-.important-note::after {
-    border-width: 0 2px 2px 0; /* Bottom and right borders */
-    border-radius: 15px; /* Rounded corners */
-    bottom: 0;
-    right: 0;
-    width: 20px; /* Corner width */
-    height: 20px; /* Corner height */
-}
-
