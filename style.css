@@ -32,6 +32,13 @@ label, button {
     margin: 10px 0;
 }
 
+
+.container button {
+    display: block; /* Make the button a block element */
+    margin: 10px auto; /* Center the button with automatic horizontal margins */
+}
+
+
 table {
     border-collapse: collapse;
     width: 100%;
