@@ -80,6 +80,11 @@ tr:nth-child(even) {
 
 
 
+#important-note ul li, #important-note ol li {
+    text-align: left;
+    /* other styles if needed */
+}
+
 #important-note {
     position: relative;
     padding: 20px;
