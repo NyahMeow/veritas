@@ -89,38 +89,56 @@ tr:nth-child(even) {
     position: relative;
     padding: 20px;
     background-color: transparent;
+    border: 10px solid transparent; /* Invisible border for spacing */
+    border-radius: 25px; /* Adjust for corner curvature */
 }
 
-#important-note::before,
-#important-note::after {
+/* Styling for top left corner */
+#important-note::before {
     content: '';
     position: absolute;
-    width: 20px; /* Adjust corner width */
-    height: 20px; /* Adjust corner height */
+    top: -10px; /* Adjust based on border size */
+    left: -10px; /* Adjust based on border size */
+    width: 20px;
+    height: 20px;
     background-color: #ADD8E6; /* Light blue background */
-}
-
-#important-note::before {
-    top: 0;
-    left: 0;
     border-top-left-radius: 15px;
 }
 
+/* Styling for top right corner */
 #important-note::after {
-    bottom: 0;
-    right: 0;
-    border-bottom-right-radius: 15px;
-}
-
-
-#important-note::before {
-    top: 0;
-    left: 0;
+    content: '';
+    position: absolute;
+    top: -10px; /* Adjust based on border size */
+    right: -10px; /* Adjust based on border size */
+    width: 20px;
+    height: 20px;
+    background-color: #ADD8E6; /* Light blue background */
     border-top-right-radius: 15px;
 }
 
+/* Add two more pseudo-elements for the bottom corners */
+
+/* Styling for bottom left corner */
 #important-note::after {
-    bottom: 0;
-    right: 0;
+    content: '';
+    position: absolute;
+    bottom: -10px; /* Adjust based on border size */
+    left: -10px; /* Adjust based on border size */
+    width: 20px;
+    height: 20px;
+    background-color: #ADD8E6; /* Light blue background */
     border-bottom-left-radius: 15px;
+}
+
+/* Styling for bottom right corner */
+#important-note::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; /* Adjust based on border size */
+    right: -10px; /* Adjust based on border size */
+    width: 20px;
+    height: 20px;
+    background-color: #ADD8E6; /* Light blue background */
+    border-bottom-right-radius: 15px;
 }
