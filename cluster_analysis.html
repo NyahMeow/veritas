@@ -48,11 +48,11 @@
         <div id="clusterCounts"></div><br>
         <div id="clusterResults"></div>
         <br>
-        <button id="downloadExcel">Download Excel</button>
+        <button id="exportExcel">Export to Excel</button>
     </div>
     
     <script>
-        document.getElementById('downloadExcel').addEventListener('click', function() {
+        document.getElementById('exportExcel').addEventListener('click', function() {
             let wb = XLSX.utils.book_new(); // New workbook
             ["clusterMeans", "clusterZScoreMeans", "clusterCounts", "clusterResults"].forEach((tableId, index) => {
                 let ws = XLSX.utils.table_to_sheet(document.getElementById(tableId)); // Convert table to sheet
