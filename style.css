@@ -80,61 +80,15 @@ tr:nth-child(even) {
 
 
 
-#important-note ul, #important-note ul li {
-    text-align: left;
-}
 
 #important-note {
-    position: relative;
-    padding: 20px;
-    background-color: transparent;
-    margin: 20px 0; /* Add margin for spacing */
-    border-radius: 25px; /* Rounded corners */
-    border: 10px solid transparent; /* Invisible border for spacing */
+    margin: 20px 0;
+    text-align: left; /* Align text to left */
 }
 
-/* Styling for each corner */
-#important-note::before,
-#important-note::after,
-#important-note div::before,
-#important-note div::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ADD8E6; /* Light blue background */
+#important-note ul {
+    list-style: disc; /* Bullet points for list */
+    padding-left: 20px; /* Indentation for list */
 }
 
-/* Positioning for each corner */
-#important-note::before {
-    top: -10px;
-    left: -10px;
-    border-top-left-radius: 25px;
-}
 
-#important-note::after {
-    top: -10px;
-    right: -10px;
-    border-top-right-radius: 25px;
-}
-
-#important-note div::before {
-    bottom: -10px;
-    left: -10px;
-    border-bottom-left-radius: 25px;
-}
-
-#important-note div::after {
-    bottom: -10px;
-    right: -10px;
-    border-bottom-right-radius: 25px;
-}
-
-/* Ensure the nested div fills the parent */
-#important-note div {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
